@@ -72,7 +72,7 @@ export class MineSkinClient {
             "User-Agent": this.options.userAgent,
             "Content-Type": "application/json"
         };
-        if (options?.apiKey) {
+        if (this.options?.apiKey) {
             headers["Authorization"] = `Bearer ${ this.options.apiKey }`;
         }
 
