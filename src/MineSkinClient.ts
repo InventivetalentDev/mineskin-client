@@ -68,22 +68,24 @@ export class MineSkinClient {
         }
         this._options = { ...DEFAULT_OPTIONS, ...options } as Required<MineSkinClientOptions>;
 
+        const headers: any = {
+            "User-Agent": this.options.userAgent,
+            "Content-Type": "application/json"
+        };
+        if (options?.apiKey) {
+            headers["Authorization"] = `Bearer ${ this.options.apiKey }`;
+        }
+
         this.generateInstance = axios.create({
             baseURL: this.options.apiBase,
             method: "POST",
-            headers: {
-                "User-Agent": this.options.userAgent,
-                "Content-Type": "application/json"
-            },
+            headers: headers,
             timeout: 30000
         });
         this.getInstance = axios.create({
             baseURL: this.options.apiBase,
             method: "GET",
-            headers: {
-                "User-Agent": this.options.userAgent,
-                "Content-Type": "application/json"
-            },
+            headers: headers,
             timeout: 10000
         });
     }
@@ -215,6 +217,7 @@ export class MineSkinClient {
 
 export interface MineSkinClientOptions {
     userAgent?: string;
+    apiKey?: string;
     apiBase?: string;
     maxTries?: number;
 }
